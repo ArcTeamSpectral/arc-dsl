@@ -16,7 +16,7 @@ const ArcGrid: React.FC<ArcGridProps> = ({ grid }) => {
         const ctx = canvas.getContext('2d');
         if (!ctx) return;
 
-        const cellSize = 25; // Slightly larger squares
+        const cellSize = grid.length > 10 || grid[0].length > 10 ? 15 : 25;
         const width = grid[0].length * cellSize;
         const height = grid.length * cellSize;
 
@@ -50,7 +50,7 @@ const ArcGrid: React.FC<ArcGridProps> = ({ grid }) => {
                     cellSize
                 );
                 // Draw faint lines
-                ctx.strokeStyle = '#444444';
+                ctx.strokeStyle = '#CCCCCC';
                 ctx.lineWidth = 0.5;
                 ctx.strokeRect(
                     j * cellSize,
