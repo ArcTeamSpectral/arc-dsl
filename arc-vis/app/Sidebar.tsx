@@ -34,7 +34,7 @@ export default function Sidebar({ functionData }: { functionData: any[] }) {
                         <Link
                             key={index}
                             href={`/${graph.name}`}
-                            className="block w-full text-left px-4 py-2 opacity-40 hover:opacity-100 text-gray-700 hover:bg-[#e6d5bc] transition-colors duration-200 ease-in-out border-[#e6d5bc]"
+                            className="block w-full text-left px-4 py-2 text-gray-700 hover:bg-[#e6d5bc] transition-colors duration-200 ease-in-out border-[#e6d5bc]"
                         >
                             <div className="flex justify-between items-center">
                                 <span className="font-medium text-sm">{index + 1}. {graph.name}</span>
