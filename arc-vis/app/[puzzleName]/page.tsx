@@ -2,7 +2,7 @@
 import fs from 'fs';
 import path from 'path';
 import Mermaid from '@/components/Mermaid';
-
+import ArcPuzzle from '@/components/ArcPuzzle';
 async function getData(puzzleName: string) {
     const filePath = path.join(process.cwd(), 'app', 'solvers_graphs.jsonl');
     const fileContents = await fs.promises.readFile(filePath, 'utf8');
@@ -10,15 +10,23 @@ async function getData(puzzleName: string) {
     return solvers_graphs.find(graph => graph.name === puzzleName);
 }
 
+async function getPuzzle(puzzleName: string) {
+    const filePath = path.join(process.cwd(), 'data', 'training', `${puzzleName}.json`);
+    const fileContents = await fs.promises.readFile(filePath, 'utf8');
+    return JSON.parse(fileContents);
+}
+
 export default async function PuzzlePage({ params }: { params: { puzzleName: string } }) {
     const graph = await getData(params.puzzleName);
-
+    const puzzle = await getPuzzle(params.puzzleName);
     if (!graph) {
         return <div>Puzzle not found</div>;
     }
     return (
         <div>
             <h1 className="text-2xl font-bold mb-4">{graph.name}</h1>
+            <ArcPuzzle puzzle={puzzle} />
+            <div className="mt-8"></div>
             <div className="flex w-full h-[600px] flex-col md:flex-row">
                 <div className="w-full md:w-1/2">
                     <Mermaid chart={graph.graph} />
