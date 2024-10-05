@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Solver Graphs Visualization</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/svelte@3.59.2/dist/svelte.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/mermaid@10.2.3/dist/mermaid.min.js"></script>
+</head>
+
+<body>
+    <div id="app"></div>
+
+    <script type="module">
+        import { writable } from 'https://cdn.jsdelivr.net/npm/svelte@3.59.2/store/index.mjs';
+
+        const App = {
+            template: `
+                <div class="flex h-screen">
+                    <div class="w-1/4 bg-gray-100 overflow-y-auto">
+                        {#each functionNames as name}
+                            <button
+                                class="block w-full text-left px-4 py-2 hover:bg-gray-200"
+                                on:click={() => selectFunction(name)}
+                            >
+                                {name}
+                            </button>
+                        {/each}
+                    </div>
+                    <div class="w-3/4 p-4">
+                        {#if selectedGraph}
+                            <div class="mermaid">
+                                {selectedGraph}
+                            </div>
+                        {/if}
+                    </div>
+                </div>
+            `,
+            setup() {
+                const functionNames = writable([]);
+                const selectedGraph = writable(null);
+                let graphs = {};
+
+                async function loadGraphs() {
+                    const response = await fetch('solvers_graphs.jsonl');
+                    const text = await response.text();
+                    const lines = text.trim().split('\n');
+
+                    graphs = lines.reduce((acc, line) => {
+                        const { function_name, mermaid_graph } = JSON.parse(line);
+                        acc[function_name] = mermaid_graph;
+                        return acc;
+                    }, {});
+
+                    functionNames.set(Object.keys(graphs));
+                }
+
+                function selectFunction(name) {
+                    selectedGraph.set(graphs[name]);
+                    mermaid.init();
+                }
+
+                loadGraphs();
+
+                return {
+                    functionNames,
+                    selectedGraph,
+                    selectFunction
+                };
+            }
+        };
+
+        new window.Svelte({
+            target: document.getElementById('app'),
+            props: App
+        });
+
+        mermaid.initialize({ startOnLoad: true });
+    </script>
+</body>
+
+</html>
