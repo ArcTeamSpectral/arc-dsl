@@ -20,7 +20,7 @@ const ArcPuzzle: React.FC<ArcPuzzleProps> = ({ puzzle }) => {
     const allExamples = [...puzzle.train, ...puzzle.test];
 
     return (
-        <div className="overflow-x-auto">
+        <div className="overflow-x-auto hidden md:block">
             <table className="min-w-full">
                 <thead>
                     <tr>
