@@ -19,11 +19,11 @@ export default async function PuzzlePage({ params }: { params: { puzzleName: str
     return (
         <div>
             <h1 className="text-2xl font-bold mb-4">{graph.name}</h1>
-            <div className="flex w-full h-[600px]">
-                <div className="w-1/2">
+            <div className="flex w-full h-[600px] flex-col md:flex-row">
+                <div className="w-full md:w-1/2">
                     <Mermaid chart={graph.graph} />
                 </div>
-                <div className="w-1/2">
+                <div className="w-full md:w-1/2">
                     <div className="whitespace-pre font-mono text-sm overflow-auto h-full">
                         {graph.function}
                     </div>
