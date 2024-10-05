@@ -1,7 +1,6 @@
 import type { Metadata } from "next";
 import localFont from "next/font/local";
 import "./globals.css";
-import Image from "next/image";
 import fs from 'fs';
 import path from 'path';
 import Link from "next/link";
@@ -61,7 +60,7 @@ async function Layout({ children }: { children: React.ReactNode }) {
             {functionData.map((graph, index) => {
               const lineCount = graph.line_count || 0;
               const maxLineCount = Math.max(...functionData.map(g => g.line_count || 0));
-              const hue = Math.round(120 * (1 - lineCount / maxLineCount)); // 120 for green to 0 for red
+              const hue = Math.round(255 * (1 - lineCount / maxLineCount)); // 255 for green to 0 for red
 
               return (
                 <Link
@@ -70,8 +69,10 @@ async function Layout({ children }: { children: React.ReactNode }) {
                   className={`block w-full text-left px-4 py-3 text-gray-700 dark:text-gray-300 hover:bg-blue-100 transition-colors duration-200 ease-in-out border-b border-gray-200 dark:border-gray-700`}
                 >
                   <div className="flex justify-between items-center">
-                    <span className="font-medium">{graph.name}</span>
-                    <span className="inline-flex items-center rounded-full bg-gray-200 dark:bg-gray-700 px-2.5 py-0.5 text-xs font-medium text-gray-800 dark:text-gray-200">
+                    <span className="font-medium">{index + 1}. {graph.name}</span>
+                    <span style={{
+                      backgroundColor: `hsl(${hue}, 100%, 95%)`
+                    }} className="inline-flex items-center rounded-full bg-gray-200 dark:bg-gray-700 px-2.5 py-0.5 text-xs font-medium text-gray-800 dark:text-gray-200">
                       {lineCount} lines
                     </span>
                   </div>
