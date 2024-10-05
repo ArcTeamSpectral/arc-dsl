@@ -3,6 +3,7 @@ import fs from 'fs';
 import path from 'path';
 import Mermaid from '@/components/Mermaid';
 import ArcPuzzle from '@/components/ArcPuzzle';
+import Notes from './Notes';
 async function getData(puzzleName: string) {
     const filePath = path.join(process.cwd(), 'app', 'solvers_graphs.jsonl');
     const fileContents = await fs.promises.readFile(filePath, 'utf8');
@@ -25,6 +26,7 @@ export default async function PuzzlePage({ params }: { params: { puzzleName: str
     return (
         <div>
             <h1 className="text-2xl font-bold mb-4">{graph.name}</h1>
+            <Notes puzzleName={params.puzzleName} />
             <ArcPuzzle puzzle={puzzle} />
             <div className="mt-8"></div>
             <div className="flex w-full h-[600px] flex-col md:flex-row">
