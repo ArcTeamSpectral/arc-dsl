@@ -7,6 +7,7 @@ import Link from "next/link";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetTrigger } from "@/components/ui/sheet";
 import { Button } from "@/components/ui/button";
+import Sidebar from "./Sidebar";
 
 const geistSans = localFont({
   src: "./fonts/GeistVF.woff",
@@ -97,32 +98,7 @@ async function Layout({ children }: { children: React.ReactNode }) {
             </ScrollArea>
           </SheetContent>
         </Sheet>
-        <aside className="hidden md:block md:w-1/4 lg:w-1/5 p-4">
-          <ScrollArea className="h-[calc(100vh-10rem)] rounded-lg bg-[#f8f1e6]">
-            {functionData.map((graph, index) => {
-              const lineCount = graph.line_count || 0;
-              const maxLineCount = Math.max(...functionData.map(g => g.line_count || 0));
-              const hue = Math.round(255 * (1 - lineCount / maxLineCount));
-
-              return (
-                <Link
-                  key={index}
-                  href={`/${graph.name}`}
-                  className="block w-full text-left px-4 py-2 opacity-40 hover:opacity-100 text-gray-700 hover:bg-[#e6d5bc] transition-colors duration-200 ease-in-out border-[#e6d5bc]"
-                >
-                  <div className="flex justify-between items-center">
-                    <span className="font-medium text-sm">{index + 1}. {graph.name}</span>
-                    <span style={{
-                      backgroundColor: `hsl(${hue}, 100%, 95%)`
-                    }} className="inline-flex items-center rounded-full bg-[#f0e0c8] px-2.5 py-0.5 text-xs font-medium text-gray-800">
-                      {lineCount} lines
-                    </span>
-                  </div>
-                </Link>
-              );
-            })}
-          </ScrollArea>
-        </aside>
+        <Sidebar functionData={functionData} />
         <main className="w-full md:w-3/4 lg:w-4/5 p-4 overflow-auto">
           {children}
         </main>
