@@ -3,7 +3,7 @@
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { useState } from 'react';
 import { Input } from "@/components/ui/input";
-import Link from "next/link";
+import NavLink from "@/components/NavLink";
 
 
 export default function Sidebar({ functionData }: { functionData: any[] }) {
@@ -31,10 +31,11 @@ export default function Sidebar({ functionData }: { functionData: any[] }) {
                     const hue = Math.round(255 * (1 - lineCount / maxLineCount));
 
                     return (
-                        <Link
+                        <NavLink
                             key={index}
                             href={`/${graph.name}`}
                             className="block w-full text-left px-4 py-2 text-gray-700 hover:bg-[#e6d5bc] transition-colors duration-200 ease-in-out border-[#e6d5bc]"
+                            activeClassName="bg-[#e6d5bc]"
                         >
                             <div className="flex justify-between items-center">
                                 <span className="font-medium text-sm">{index + 1}. {graph.name}</span>
@@ -44,7 +45,7 @@ export default function Sidebar({ functionData }: { functionData: any[] }) {
                                     {lineCount} lines
                                 </span>
                             </div>
-                        </Link>
+                        </NavLink>
                     );
                 })}
             </ScrollArea>
