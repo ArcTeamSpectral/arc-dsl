@@ -1,7 +1,7 @@
 
 import { openDB, DBSchema, IDBPDatabase } from 'idb';
 
-interface NoteEntry {
+export interface NoteEntry {
     id?: number;
     puzzleName: string;
     attachment: string;
@@ -59,3 +59,7 @@ export async function deleteNote(id: number): Promise<void> {
     await db.delete('notes', id);
 }
 
+export async function getAllNotes(): Promise<NoteEntry[]> {
+    const db = await getDB();
+    return db.getAll('notes');
+}

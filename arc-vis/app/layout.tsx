@@ -8,6 +8,7 @@ import { ScrollArea } from "@/components/ui/scroll-area";
 import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetTrigger } from "@/components/ui/sheet";
 import { Button } from "@/components/ui/button";
 import Sidebar from "./Sidebar";
+import { NavigationMenuDemo } from "./NavigationMenu";
 
 const geistSans = localFont({
   src: "./fonts/GeistVF.woff",
@@ -57,7 +58,7 @@ async function Layout({ children }: { children: React.ReactNode }) {
         <div className="container mx-auto px-4 py-3 flex items-center justify-between">
           <h1 className="text-2xl font-bold text-gray-800">ARC DSL VIS</h1>
           <nav>
-            {/* Add navigation items here if needed */}
+            <Link href="/notes">Notes</Link>
           </nav>
         </div>
       </header>
